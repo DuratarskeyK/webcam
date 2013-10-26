@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251">
+    <title>Webcam Pacman</title>
+
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/pacman.css">
+    <link rel="shortcut icon" href="static/img/favicon.ico">
+</head>
+<body>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">PACMAN HARDCORE</a>
+            </div>
+            <div class="navbar-collapse collapse">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container" >
+            <div class="row">
+                <div class="col-md-4 col-xs-8">
+                    <div id="pacman">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <video autoplay id="vid"></video>
+                    <canvas id="camcanvas" width="640" height="480"></canvas>
+                    <canvas id="redcanv" width="640" height="480"></canvas>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="row" align="center">
+                    <div class="col-xs-6 col-md-5" ></div>
+                    <div class="col-xs-6 col-md-2" ></div>
+                    <div class="col-xs-6 col-md-2" id="upd">Up</div>
+                    <div class="col-xs-6 col-md-2"></div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-xs-6 col-md-5" ></div>
+                    <div class="col-xs-6 col-md-2" id="leftd">Left</div>
+                    <div class="col-xs-6 col-md-2"></div>
+                    <div class="col-xs-6 col-md-2" id="rightd">Right</div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-xs-6 col-md-5" ></div>
+                    <div class="col-xs-6 col-md-2"></div>
+                    <div class="col-xs-6 col-md-2" id="downd">Down</div>
+                    <div class="col-xs-6 col-md-2"></div>
+                </div>
+            </div>
+
+    </div>
+
+    <script src="static/js/pacman.js"></script>
+    <script src="static/js/jquery.js"></script>
+    <script>
+        var el = $('#pacman')[0];
+
+        function supportsOggAudio() {
+            var myAudio = document.createElement("audio");
+            return typeof myAudio.canPlayType === "function" &&
+                    ("no" != myAudio.canPlayType("audio/ogg")) &&
+                    ("" != myAudio.canPlayType("audio/ogg"));
+        };
+
+        function supports_canvas() {
+            return !!document.createElement('canvas').getContext;
+        };
+
+        function supports_local_storage() {
+            return ('localStorage' in window) && window['localStorage'] !== null;
+        };
+
+        function supports_audio() {
+            var myAudio = document.createElement('audio');
+            var canPlayOGG = typeof myAudio.canPlayType === "function" &&
+                    !!(myAudio.canPlayType('audio/ogg').replace(/no/, ''));
+            var canPlayMP3 = typeof myAudio.canPlayType === "function" &&
+                    !!(myAudio.canPlayType('audio/mpeg').replace(/no/, ''));
+            return canPlayOGG || canPlayMP3;
+        };
+
+        if (supports_canvas() && supports_local_storage() && supports_audio()) {
+            $(document).ready(function () {
+                PACMAN.init(el, "/static/");
+            });
+        } else {
+            el.innerHTML = "Ваш браузер слишком стар, заведите себе новый.";
+        }
+    </script>
+</body>
+</html>
